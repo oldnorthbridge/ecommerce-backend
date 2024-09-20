@@ -25,7 +25,7 @@ public class AdminUserController {
 	@GetMapping("/users")
 	public ResponseEntity<List<User>> getAllUsers(@RequestHeader("Authorization") String jwt) throws UserException{
 
-		System.out.println("/api/users/profile");
+
 		List<User> user=userService.findAllUsers();
 		return new ResponseEntity<>(user,HttpStatus.ACCEPTED);
 	}

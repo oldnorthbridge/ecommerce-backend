@@ -72,7 +72,7 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public void removeCartItem(Long userId, Long cartItemId) throws CartItemException, UserException {
-        System.out.println("userId- "+userId+" cartItemId "+cartItemId);
+
 
         CartItem cartItem=findCartItemById(cartItemId);
 

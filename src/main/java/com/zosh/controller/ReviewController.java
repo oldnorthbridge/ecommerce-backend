@@ -37,9 +37,9 @@ public class ReviewController {
 	@PostMapping("/create")
 	public ResponseEntity<Review> createReviewHandler(@RequestBody ReviewRequest req, @RequestHeader("Authorization") String jwt) throws Exception {
 		User user=userService.findUserProfileByJwt(jwt);
-		System.out.println("product id "+req.getProductId()+" - "+req.getReview());
+
 		Review review=reviewService.createReview(req, user);
-		System.out.println("product review "+req.getReview());
+
 		return new ResponseEntity<Review>(review,HttpStatus.ACCEPTED);
 	}
 	

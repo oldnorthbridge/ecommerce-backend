@@ -6,6 +6,7 @@ import com.zosh.model.User;
 import com.zosh.repository.UserRepository;
 import com.zosh.request.LoginRequest;
 import com.zosh.response.AuthResponse;
+import com.zosh.service.CartService;
 import com.zosh.service.CustomUserServiceImplementation;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -34,6 +35,8 @@ public class AuthController {
     private JwtProvider jwtProvider;
     @Resource
     private CustomUserServiceImplementation customUserDetails;
+    @Resource
+    private CartService cartService;
 
 
     @PostMapping("/signup")
@@ -63,7 +66,7 @@ public class AuthController {
 
         User savedUser= userRepository.save(createdUser);
 
-//        cartService.createCart(savedUser);
+        cartService.createCart(savedUser);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(email, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -80,7 +83,7 @@ public class AuthController {
         String username = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
-        System.out.println(username +" ----- "+password);
+
 
         Authentication authentication = authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -98,14 +101,13 @@ public class AuthController {
     private Authentication authenticate(String username, String password) {
         UserDetails userDetails = customUserDetails.loadUserByUsername(username);
 
-        System.out.println("sign in userDetails - "+userDetails);
+
 
         if (userDetails == null) {
-            System.out.println("sign in userDetails - null " + userDetails);
+
             throw new BadCredentialsException("Invalid username or password");
         }
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-            System.out.println("sign in userDetails - password not match " + userDetails);
             throw new BadCredentialsException("Invalid username or password");
         }
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

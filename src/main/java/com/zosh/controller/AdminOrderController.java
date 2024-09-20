@@ -61,7 +61,7 @@ public class AdminOrderController {
 														  @RequestHeader("Authorization") String jwt) throws OrderException{
 		orderService.deleteOrder(orderId);
 		ApiResponse res=new ApiResponse("Order Deleted Successfully",true);
-		System.out.println("delete method working....");
+
 		return new ResponseEntity<>(res,HttpStatus.ACCEPTED);
 	}
 

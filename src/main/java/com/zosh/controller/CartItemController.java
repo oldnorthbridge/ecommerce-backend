@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zosh.exception.CartItemException;
-import com.zosh.exception.UserException;
 import com.zosh.model.CartItem;
 import com.zosh.model.User;
 import com.zosh.response.ApiResponse;
@@ -22,7 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/cart_items")
-@Tag(name="Cart Item Management", description = "create cart item delete cart item")
+@Tag(name="Cart Item Management 模块", description = "这是关于描述的部分")
 public class CartItemController {
 
 	private CartItemService cartItemService;

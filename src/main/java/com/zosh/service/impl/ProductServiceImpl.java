@@ -35,34 +35,34 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product createProduct(CreateProductRequest req) throws ProductException {
-        Category topLevel=categoryRepository.findByName(req.getTopLavelCategory());
+        Category topLevel=categoryRepository.findByName(req.getTopLevelCategory());
 
         if(topLevel==null) {
 
             Category topLavelCategory=new Category();
-            topLavelCategory.setName(req.getTopLavelCategory());
+            topLavelCategory.setName(req.getTopLevelCategory());
             topLavelCategory.setLevel(1);
 
             topLevel= categoryRepository.save(topLavelCategory);
         }
 
         Category secondLevel=categoryRepository.
-                findByNameAndParant(req.getSecondLavelCategory(),topLevel.getName());
+                findByNameAndParant(req.getSecondLevelCategory(),topLevel.getName());
         if(secondLevel==null) {
 
             Category secondLavelCategory=new Category();
-            secondLavelCategory.setName(req.getSecondLavelCategory());
+            secondLavelCategory.setName(req.getSecondLevelCategory());
             secondLavelCategory.setParentCategory(topLevel);
             secondLavelCategory.setLevel(2);
 
             secondLevel= categoryRepository.save(secondLavelCategory);
         }
 
-        Category thirdLevel=categoryRepository.findByNameAndParant(req.getThirdLavelCategory(),secondLevel.getName());
+        Category thirdLevel=categoryRepository.findByNameAndParant(req.getThirdLevelCategory(),secondLevel.getName());
         if(thirdLevel==null) {
 
             Category thirdLavelCategory=new Category();
-            thirdLavelCategory.setName(req.getThirdLavelCategory());
+            thirdLavelCategory.setName(req.getThirdLevelCategory());
             thirdLavelCategory.setParentCategory(secondLevel);
             thirdLavelCategory.setLevel(3);
 
@@ -86,7 +86,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product savedProduct= productRepository.save(product);
 
-        System.out.println("products - "+product);
+
 
         return savedProduct;
 
@@ -96,7 +96,7 @@ public class ProductServiceImpl implements ProductService {
     public String deleteProduct(Long productId) throws ProductException {
         Product product=findProductById(productId);
 
-        System.out.println("delete product "+product.getId()+" - "+productId);
+
         product.getSizes().clear();
 //		productRepository.save(product);
 //		product.getCategory().
@@ -140,7 +140,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findProductByCategory(String category) {
-        System.out.println("category --- "+category);
+
 
         List<Product> products = productRepository.findByCategory(category);
 

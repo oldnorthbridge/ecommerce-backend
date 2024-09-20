@@ -38,8 +38,8 @@ public class CartController {
 		User user=userService.findUserProfileByJwt(jwt);
 		
 		Cart cart=cartService.findUserCart(user.getId());
-		
-		System.out.println("cart - "+cart.getUser().getEmail());
+		 System.out.println(cart);
+
 		
 		return new ResponseEntity<Cart>(cart,HttpStatus.OK);
 	}
