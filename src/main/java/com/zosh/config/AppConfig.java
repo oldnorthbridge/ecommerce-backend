@@ -1,6 +1,7 @@
 package com.zosh.config;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,6 +30,11 @@ public class AppConfig {
                 .addFilterBefore(new JwtValidator(), BasicAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors->cors.configurationSource(corsConfigurationSource()))
+                .exceptionHandling(exh -> exh.authenticationEntryPoint(
+                        (request, response, ex) -> {
+                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
+                        }
+                ))
                 .build();
     }
 
@@ -47,6 +53,7 @@ public class AppConfig {
             }
         };
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
