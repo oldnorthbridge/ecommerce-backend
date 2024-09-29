@@ -37,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrder(User user, Address shippingAdress) {
+
         shippingAdress.setUser(user);
         Address address= addressRepository.save(shippingAdress);
         user.getAddress().add(address);
@@ -47,6 +48,7 @@ public class OrderServiceImpl implements OrderService {
 
         for(CartItem item: cart.getCartItems()) {
             OrderItem orderItem=new OrderItem();
+//            System.out.println(item);
 
             orderItem.setPrice(item.getPrice());
             orderItem.setProduct(item.getProduct());
@@ -58,9 +60,10 @@ public class OrderServiceImpl implements OrderService {
 
             OrderItem createdOrderItem=orderItemRepository.save(orderItem);
 
+
             orderItems.add(createdOrderItem);
         }
-
+        System.out.println(orderItems);
 
         Order createdOrder=new Order();
         createdOrder.setUser(user);

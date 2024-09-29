@@ -20,7 +20,7 @@ public class CreateProductRequest {
 
     private int discountedPrice;
 
-    private int discountPersent;
+    private int discountPercent;
 
     private int quantity;
 
